@@ -18,13 +18,7 @@ jobs:
         run: |
           neoload --version
  
-      - name: Login to NeoLoad
-        env:
-          NL_APIKEY: ${{ secrets.NEOLOAD_TOKEN }}
-        run: |
-          neoload login \
-            --url https://neoload-api.saas.neotys.com \
-            --apikey $NL_APIKEY
+   
  
       - name: Execute NeoLoad Scenario
         run: |
