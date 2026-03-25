@@ -1,28 +1,19 @@
 name: Neoload Test Execution
- 
 on:
-  workflow_dispatch:
- 
+  workflow_dispatch: # Allows manual trigger
 jobs:
   run-neoload-test:
-    runs-on: neoload-runner-2
- 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    runs-on: neoload-runner-2 # Matches dxpvr-perfTest runner
  
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
  
-      - name: Verify NeoLoad CLI
+      - name: Login to NeoLoad
+        env:
+          NL_TOKEN: ${{ secrets.NEOLOAD_TOKEN }}
         run: |
-          neoload --version
- 
-   
- 
+          neoload login --token $NL_TOKEN
       - name: Execute NeoLoad Scenario
         run: |
-          neoload run \
-            --project-path "./petstore.nlp" \
-            --scenario "scenario1" \
-            --result-name "GitHub Run $GITHUB_RUN_ID"
+          neoload run --project "petstore.nlp" --scenario "scenario1" -v
