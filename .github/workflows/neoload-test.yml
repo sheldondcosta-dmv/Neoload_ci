@@ -3,7 +3,7 @@ on:
   workflow_dispatch: # Allows manual trigger
 jobs:
   run-neoload-test:
-    runs-on: self-hosted # Matches dxpvr-perfTest runner
+    runs-on: neoload-runner-2 # Matches dxpvr-perfTest runner
 
     steps:
       - name: Checkout Code
@@ -16,5 +16,5 @@ jobs:
           neoload login --token $NL_TOKEN
       - name: Execute NeoLoad Scenario
         run: |
-          neoload run --project "DXPVR.nlp" --scenario "SmokeTest"
+          neoload run --project "petstore.nlp" --scenario "scenario1"
          
