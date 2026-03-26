@@ -16,4 +16,6 @@ jobs:
           neoload login --token $NL_TOKEN
       - name: Execute NeoLoad Scenario
         run: |
-          neoload run --project "petstore.nlp" --scenario "scenario1" -v
+          $neoloadPath = 'C:\Program Files\NeoLoad 2024.3\bin\NeoLoadCmd.exe'
+          $projectPath = "$(env:GITHUB_WORKSPACE)\petstore.nlp"
+          & $neoloadPath -project $projectPath -launch "scenario1" -noGUI
