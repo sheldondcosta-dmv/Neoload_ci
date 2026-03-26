@@ -14,10 +14,4 @@ jobs:
         run: |
           $neoloadPath = 'C:\Program Files\NeoLoad 2024.3\bin\NeoLoadCmd.exe'
           $projectPath = "$($env:GITHUB_WORKSPACE)\petstore.nlp"
-          $reportPath = "$($env:GITHUB_WORKSPACE)\neoload-report.html"
           & $neoloadPath -project $projectPath -launch "scenario1" -noGUI
-      - name: Upload Report Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: NeoLoad-HTML-Report
-          path: ${{ github.workspace }}\neoload-report.html
