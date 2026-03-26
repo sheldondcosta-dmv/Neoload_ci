@@ -1,23 +1,24 @@
 name: Neoload Test Execution
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual trigger
 jobs:
   run-neoload-test:
-    runs-on: neoload-runner-2
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    runs-on: neoload # Matches dxpvr-perfTest runner
+ 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-      - name: Login to NeoLoad
-        env:
-          NL_TOKEN: ${{ secrets.NEOLOAD_TOKEN }}
-        run: |
-          neoload login --token $NL_TOKEN
+ 
       - name: Execute NeoLoad Scenario
+        shell: powershell
         run: |
-          neoload run \
-            --project-path "./petstore.nlp" \
-            --scenario "scenario1" \
-         
+          $neoloadPath = 'C:\Program Files\NeoLoad 2024.3\bin\NeoLoadCmd.exe'
+          $projectPath = "$($env:GITHUB_WORKSPACE)\petstore.nlp"
+          $reportPath = "$($env:GITHUB_WORKSPACE)\neoload-report.html"
+          & $neoloadPath -project $projectPath -launch "scenario1" -noGUI
+      - name: Upload Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: NeoLoad-HTML-Report
+          path: ${{ github.workspace }}\neoload-report.html
 
