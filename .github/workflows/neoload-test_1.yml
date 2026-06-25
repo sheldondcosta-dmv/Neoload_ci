@@ -3,7 +3,7 @@ on:
   workflow_dispatch: # Allows manual trigger
 jobs:
   run-neoload-test:
-    runs-on: DMVETAGP04 # Matches dxpvr-perfTest runner
+    runs-on: neoload-testing # Matches dxpvr-perfTest runner
  
     steps:
       - name: Checkout Code
